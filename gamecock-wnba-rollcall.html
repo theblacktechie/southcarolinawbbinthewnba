@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 Through 12: Gamecocks in the WNBA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --garnet: #73010b;
+  --black: #0f0f0f;
+  --white: #ffffff;
+  --off-white: #f8f7f5;
+  --rule: #e4e1dc;
+  --muted: #6b6560;
+  --soft: #c4bfb9;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* MASTHEAD */
+.masthead {
+  border-top: 3px solid var(--garnet);
+  border-bottom: 1px solid var(--rule);
+  padding: 11px 20px;
+}
+.masthead-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.m-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--garnet);
+}
+.m-sep { color: var(--soft); font-size: 11px; }
+.m-label { font-size: 11.5px; font-weight: 400; color: var(--muted); }
+
+/* HERO */
+.hero {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 24px 20px;
+  text-align: center;
+}
+.num-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0 8px;
+  margin-bottom: 12px;
+}
+.num-plain {
+  font-size: clamp(24px, 5vw, 44px);
+  font-weight: 900;
+  letter-spacing: -.03em;
+  color: var(--soft);
+  line-height: 1.1;
+}
+.num-twelve {
+  font-size: clamp(24px, 5vw, 44px);
+  font-weight: 900;
+  letter-spacing: -.03em;
+  color: var(--white);
+  background: var(--garnet);
+  padding: 0 7px 2px;
+  line-height: 1.2;
+}
+.hero-context {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.ctx-stat { font-size: 11px; font-weight: 600; color: var(--muted); }
+.ctx-arrow { font-size: 11px; color: var(--soft); }
+.ctx-now { font-size: 11px; font-weight: 700; color: var(--garnet); }
+.hero-dek {
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* INTERACTIVE */
+.roll-wrap {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px 24px 20px;
+}
+.counter-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.counter-left { display: flex; align-items: baseline; gap: 6px; }
+.counter-big {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -.05em;
+  color: var(--garnet);
+  line-height: 1;
+  min-width: 50px;
+}
+.counter-denom { font-size: 12.5px; font-weight: 500; color: var(--muted); }
+.counter-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.prog-wrap {
+  height: 2px;
+  background: var(--rule);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 2px;
+  background: var(--garnet);
+  width: 0%;
+  transition: width 0.4s cubic-bezier(.4,0,.2,1);
+}
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.btn-play {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: var(--garnet);
+  color: #fff;
+  border: none;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: background 0.14s;
+  min-width: 80px;
+}
+.btn-play:hover { background: #5c0009; }
+.btn-reset {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background 0.14s;
+}
+.btn-reset:hover { background: var(--off-white); }
+.status-txt { font-size: 11px; font-weight: 500; color: var(--muted); }
+
+/* List */
+.roll-list {
+  list-style: none;
+  min-height: 448px;
+}
+.roll-item {
+  display: grid;
+  grid-template-columns: 28px 1fr auto 28px;
+  align-items: center;
+  gap: 0 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 0.26s ease, transform 0.26s ease;
+  cursor: pointer;
+}
+.roll-item:first-child { border-top: 1px solid var(--rule); }
+.roll-item:hover { background: var(--off-white); }
+.roll-item.visible { opacity: 1; transform: translateY(0); }
+.roll-item.active .ri-name { color: var(--garnet); }
+.ri-n { font-size: 10px; font-weight: 700; color: var(--garnet); letter-spacing: .05em; }
+.ri-name { font-size: 13.5px; font-weight: 700; letter-spacing: -.02em; color: var(--black); transition: color 0.15s; }
+.ri-team { font-size: 11.5px; font-weight: 400; color: var(--muted); text-align: right; white-space: nowrap; }
+.ri-yr { font-size: 10px; font-weight: 600; color: var(--soft); text-align: right; }
+
+/* TWEET
+   Wide enough that ~166 chars fit on 1 line at 11px on a 1100px+ desktop.
+   Natural word wrap handles narrower viewports gracefully. */
+.tweet-wrap {
+  display: table;
+  max-width: calc(100% - 48px);
+  margin: 0 auto;
+  padding: 0 0 16px;
+}
+.tweet-block {
+  border-left: 2px solid var(--garnet);
+  padding: 10px 16px 10px 12px;
+  background: var(--off-white);
+}
+.tweet-q {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--black);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tweet-attr {
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--garnet);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* FOOTER */
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding: 14px 24px 40px;
+  text-align: center;
+}
+.footer-byline { font-size: 11px; color: var(--soft); line-height: 1.9; }
+.footer-byline strong { color: var(--muted); font-weight: 600; }
+
+/* MOBILE — allow wrap on small screens */
+@media (max-width: 768px) {
+  .tweet-q {
+    font-size: 12px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  .tweet-wrap { display: block; width: calc(100% - 40px); padding: 0 0 16px; }
+  .roll-item { grid-template-columns: 24px 1fr auto 24px; gap: 0 8px; }
+  .ri-name { font-size: 13px; }
+  .ri-team { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <span class="m-eyebrow">GamecockWBB</span>
+    <span class="m-sep">/</span>
+    <span class="m-label">WNBA Season 30</span>
+    <span class="m-sep">/</span>
+    <span class="m-label">May 7, 2026</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="num-row">
+    <span class="num-plain">1</span>
+    <span class="num-plain">2</span>
+    <span class="num-plain">3</span>
+    <span class="num-plain">4</span>
+    <span class="num-plain">5</span>
+    <span class="num-plain">6</span>
+    <span class="num-plain">7</span>
+    <span class="num-plain">8</span>
+    <span class="num-plain">9</span>
+    <span class="num-plain">10</span>
+    <span class="num-plain">11</span>
+    <span class="num-twelve">12</span>
+  </div>
+  <div class="hero-context">
+    <span class="ctx-stat">10 Gamecocks in the WNBA in 2024</span>
+    <span class="ctx-arrow">&rarr;</span>
+    <span class="ctx-now">12 in Season 30</span>
+  </div>
+  <p class="hero-dek">In the order they entered the league. Playing automatically. Tap any row.</p>
+</section>
+
+<div class="roll-wrap">
+  <div class="counter-row">
+    <div class="counter-left">
+      <span class="counter-big" id="counter-big">0</span>
+      <span class="counter-denom">/ 12 Gamecocks</span>
+    </div>
+    <span class="counter-label">Roll Call</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="prog-fill"></div></div>
+  <div class="controls">
+    <button class="btn-play" id="btn-play">Pause</button>
+    <button class="btn-reset" id="btn-reset">Reset</button>
+    <span class="status-txt" id="status-txt" aria-live="polite"></span>
+  </div>
+  <ul class="roll-list" id="roll-list" aria-label="Gamecocks in the WNBA, Season 30"></ul>
+</div>
+
+<div class="tweet-wrap">
+  <div class="tweet-block">
+    <p class="tweet-q">"1 2 3 4 5 6 7 8 9 10 11 12 @GamecockWBB in the @WNBA. We are blessed!! Congrats ladies! Earned. Deserved. And never ever taken for granted. God is the greatest!!"</p>
+    <p class="tweet-attr">Coach Dawn Staley &middot; @dawnstaley &middot; May 7, 2026</p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p class="footer-byline">
+    Data visualization by <strong>Kris E. Smith</strong> &middot; May 7, 2026<br>
+    Data sourced from <strong>WNBA.com</strong>, <strong>GamecockOnline</strong>, <strong>ESPN</strong>, and <strong>On3</strong>.
+  </p>
+</footer>
+
+<script>
+var PLAYERS = [
+  { n:1,  name:'Allisha Gray',       team:'Atlanta Dream',          year:2017 },
+  { n:2,  name:'A\u2019ja Wilson',   team:'Las Vegas Aces',         year:2018 },
+  { n:3,  name:'Tyasha Harris',      team:'Indiana Fever',          year:2020 },
+  { n:4,  name:'Aliyah Boston',      team:'Indiana Fever',          year:2023 },
+  { n:5,  name:'Zia Cooke',          team:'Seattle Storm',          year:2023 },
+  { n:6,  name:'Laeticia Amihere',   team:'Golden State Valkyries', year:2023 },
+  { n:7,  name:'Kamilla Cardoso',    team:'Chicago Sky',            year:2024 },
+  { n:8,  name:'Te-Hina Paopao',    team:'Atlanta Dream',          year:2025 },
+  { n:9,  name:'Sania Feagin',       team:'Los Angeles Sparks',     year:2025 },
+  { n:10, name:'Raven Johnson',      team:'Indiana Fever',          year:2026 },
+  { n:11, name:'Ta\u2019Niya Latson',team:'Los Angeles Sparks',     year:2026 },
+  { n:12, name:'Madina Okot',        team:'Atlanta Dream',          year:2026 }
+];
+
+var rollList  = document.getElementById('roll-list');
+var itemEls   = [];
+var current   = -1;
+var playing   = false;
+var timer     = null;
+var DELAY     = 2000;
+
+var counterEl = document.getElementById('counter-big');
+var progFill  = document.getElementById('prog-fill');
+var btnPlay   = document.getElementById('btn-play');
+var btnReset  = document.getElementById('btn-reset');
+var statusEl  = document.getElementById('status-txt');
+
+function setCounter(n) {
+  counterEl.textContent = n;
+  progFill.style.width = (n / 12 * 100).toFixed(1) + '%';
+}
+
+function createAndReveal(idx) {
+  var p = PLAYERS[idx];
+  var li = document.createElement('li');
+  li.className = 'roll-item';
+  var numStr = p.n < 10 ? '0' + p.n : '' + p.n;
+  li.innerHTML =
+    '<span class="ri-n">' + numStr + '</span>' +
+    '<span class="ri-name">' + p.name + '</span>' +
+    '<span class="ri-team">' + p.team + '</span>' +
+    '<span class="ri-yr">\'' + String(p.year).slice(2) + '</span>';
+  li.addEventListener('click', function() {
+    if (playing) pause();
+    itemEls.forEach(function(el) { el.classList.remove('active'); });
+    li.classList.add('active');
+    current = idx;
+    setCounter(idx + 1);
+    statusEl.textContent = '';
+  });
+  rollList.appendChild(li);
+  itemEls.push(li);
+  if (idx > 0 && itemEls[idx - 1]) itemEls[idx - 1].classList.remove('active');
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() { li.classList.add('visible', 'active'); });
+  });
+  current = idx;
+  setCounter(current + 1);
+  statusEl.textContent = '';
+}
+
+function advance() {
+  if (current >= PLAYERS.length - 1) {
+    playing = false;
+    btnPlay.textContent = 'Replay';
+    statusEl.textContent = 'Complete';
+    return;
+  }
+  createAndReveal(current + 1);
+  if (playing) timer = setTimeout(advance, DELAY);
+}
+
+function play() {
+  if (current >= PLAYERS.length - 1) return;
+  playing = true;
+  btnPlay.textContent = 'Pause';
+  statusEl.textContent = '';
+  advance();
+}
+
+function pause() {
+  playing = false;
+  clearTimeout(timer);
+  btnPlay.textContent = 'Play';
+}
+
+function reset() {
+  pause();
+  current = -1;
+  setCounter(0);
+  statusEl.textContent = '';
+  btnPlay.textContent = 'Pause';
+  while (rollList.firstChild) { rollList.removeChild(rollList.firstChild); }
+  itemEls = [];
+  setTimeout(play, 600);
+}
+
+btnPlay.addEventListener('click', function() {
+  if (btnPlay.textContent === 'Replay') { reset(); return; }
+  if (playing) pause(); else play();
+});
+btnReset.addEventListener('click', reset);
+
+window.addEventListener('load', function() { setTimeout(play, 900); });
+</script>
+</body>
+</html>
