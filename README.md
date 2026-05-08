@@ -1,4 +1,4 @@
-# gamecock-wnba-rollcall
+# Gamecock WNBA Roll Call: 30th Season Edition 2026
 
 **12 Gamecocks in the WNBA: Season 30 Roll Call**
 
